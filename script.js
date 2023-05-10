@@ -27,7 +27,7 @@ Array.from(document.getElementsByClassName("menu-item"))
         }
         
         iteration += 1 / 3;
-      }, 30);
+      }, 20);
     }
   });
 
