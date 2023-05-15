@@ -32,49 +32,33 @@ Array.from(document.getElementsByClassName("menu-item"))
   });
 
 
-// Получаем элемент <p> по его id
-const paragraph = document.getElementById('my-paragraph');
-// Получаем элемент <div> по его id
-const lettersDiv = document.getElementById('letters');
+var paragraph = document.getElementById('my-paragraph');
+var originalText = paragraph.textContent;
 
-// Получаем текст из элемента <p>
-const text = paragraph.textContent;
+paragraph.innerHTML = shuffleString(originalText);
 
-// Разделяем текст на отдельные символы
-const characters = text.split('');
+function shuffleString(text) {
+    var shuffledText = '';
+    var charArray = text.split('');
 
-// Очищаем содержимое элемента <p>
-paragraph.textContent = '';
+    while (charArray.length > 0) {
+        var randomIndex = Math.floor(Math.random() * charArray.length);
+        shuffledText += charArray[randomIndex];
+        charArray.splice(randomIndex, 1);
+    }
 
-// Перебираем каждый символ и создаем для него новый <span> элемент
-characters.forEach((character) => {
-  const span = document.createElement('span');
-  span.textContent = character;
-  
-  // Генерируем случайные значения для позиции символа
-  const randomX = Math.random() * 100; // случайное значение от 0 до 100 для оси X
-  const randomY = Math.random() * 100; // случайное значение от 0 до 100 для оси Y
-  
-  // Применяем стили для случайной позиции символа
-  span.style.position = 'absolute';
-  span.className = 'letter-span';
-  span.style.left = `${randomX}%`;
-  span.style.top = `${randomY}%`;
-  
-  // Добавляем созданный <span> элемент внутрь элемента <div>
-  lettersDiv.appendChild(span);
-
-  lettersDiv.addEventListener('mouseover', () => {
-    // Восстанавливаем исходное положение символа
-    span.style.position = 'relative';
-    span.style.left = '';
-    span.style.top = '';
-    Array.from(document.getElementsByClassName("letter-span"))
-      .forEach((item) => {
-
-      })
-  });
+    return shuffledText;
+}
+paragraph.addEventListener('mouseover', function () {
+  paragraph.textContent = originalText;
 });
+
+paragraph.addEventListener('mouseout', function () {
+  var randomizedText = shuffleString(originalText);
+  paragraph.textContent = randomizedText;
+});
+
+
 
 
 
